@@ -1,11 +1,12 @@
 package com.atixlabs;
 
 import com.atixlabs.message.Message;
-import com.atixlabs.server.task.MeasurementsProcessor;
+import com.atixlabs.server.processor.MeasurementsProcessor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.powermock.reflect.Whitebox;
@@ -24,6 +25,7 @@ import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(MeasurementsProcessor.class)
+@PowerMockIgnore({"javax.management.*", "javax.script.*"})
 public class MonitorServerTests {
 
     private static final String AVERAGE_METHOD =  "validateAverage";

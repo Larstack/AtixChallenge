@@ -1,7 +1,7 @@
 package com.atixlabs.server;
 
 import com.atixlabs.message.Message;
-import com.atixlabs.server.task.MeasurementsProcessor;
+import com.atixlabs.server.processor.MeasurementsProcessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
