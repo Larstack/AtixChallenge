@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-import static com.atixlabs.server.MonitorServer.PORT;
+import static com.atixlabs.monitor.Monitor.PORT;
 import static com.atixlabs.utils.Utils.round;
 
 /**
