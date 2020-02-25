@@ -1,6 +1,13 @@
 Configuration:
   status: warn
-
+  properties:
+    property:
+      - name: monitorfilename
+        value: /tmp/monitor_logs/monitor.log
+      - name: sensorsfilename
+        value: /tmp/monitor_logs/sensors.log
+      - name: packagename
+        value: /tmp/monitor_logs/monitor.log
   appenders:
     Console:
       name: LogToConsole
@@ -8,8 +15,18 @@ Configuration:
         Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
 
     RollingFile:
-      - name: LogToRollingFile
-        fileName: logs/monitor.log
+      - name: MonitorLogToRollingFile
+        fileName: ${monitorfilename}
+        filePattern: "logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz"
+        PatternLayout:
+          pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 10MB
+        DefaultRollOverStrategy:
+          max: 10
+      - name: SensorsLogToRollingFile
+        fileName: ${sensorsfilename}
         filePattern: "logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz"
         PatternLayout:
           pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
@@ -21,12 +38,18 @@ Configuration:
 
   Loggers:
     logger:
-      - name: com.atixlabs.server
+      - name: com.atixlabs.monitor
         level: debug
         additivity: false
         AppenderRef:
           - ref: LogToConsole
-          - ref: LogToRollingFile
+          - ref: MonitorLogToRollingFile
+      - name: com.atixlabs.simulation
+        level: debug
+        additivity: false
+        AppenderRef:
+          - ref: LogToConsole
+          - ref: SensorsLogToRollingFile
 
     Root:
       level: debug
