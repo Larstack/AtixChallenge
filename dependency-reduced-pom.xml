@@ -4,7 +4,7 @@
   <groupId>com.atixlabs</groupId>
   <artifactId>atix-challenge</artifactId>
   <name>atix-challenge</name>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <description>Atix Labs challenge</description>
   <build>
     <plugins>
