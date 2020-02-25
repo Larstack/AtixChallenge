@@ -35,6 +35,10 @@ public class MeasurementsProcessor implements Runnable {
         LOG.info("Processing measurements");
         List<Message> messages = new ArrayList<>();
         queue.drainTo(messages);
+        if(messages.isEmpty()){
+            LOG.info("Queue is empty");
+            return;
+        }
         LOG.debug("Messages to process: " + messages);
         DoubleSummaryStatistics summary = messages.stream()
                 .map(Message::getMeasurement).map(BigDecimal::doubleValue).collect(Collectors.summarizingDouble(Double::doubleValue));
