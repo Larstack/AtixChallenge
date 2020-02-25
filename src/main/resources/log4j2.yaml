@@ -1,6 +1,9 @@
 Configuration:
   status: warn
-
+  properties:
+    property:
+      name: filename
+      value: /tmp/monitor_logs/monitor.log
   appenders:
     Console:
       name: LogToConsole
@@ -9,7 +12,7 @@ Configuration:
 
     RollingFile:
       - name: LogToRollingFile
-        fileName: logs/monitor.log
+        fileName: ${filename}
         filePattern: "logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz"
         PatternLayout:
           pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"

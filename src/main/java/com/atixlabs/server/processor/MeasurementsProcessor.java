@@ -36,7 +36,7 @@ public class MeasurementsProcessor implements Runnable {
         List<Message> messages = new ArrayList<>();
         queue.drainTo(messages);
         if(messages.isEmpty()){
-            LOG.info("Queue is empty");
+            LOG.info("There aren't measurements to process");
             return;
         }
         LOG.debug("Messages to process: " + messages);
