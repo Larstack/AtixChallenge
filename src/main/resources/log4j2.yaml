@@ -6,8 +6,6 @@ Configuration:
         value: /tmp/monitor_logs/monitor.log
       - name: sensorsfilename
         value: /tmp/monitor_logs/sensors.log
-      - name: packagename
-        value: /tmp/monitor_logs/monitor.log
   appenders:
     Console:
       name: LogToConsole
