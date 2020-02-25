@@ -1,6 +1,7 @@
-package com.atixlabs.monitor;
+package com.atixlabs.monitor.socket;
 
 import com.atixlabs.message.Message;
+import com.atixlabs.monitor.queue.MonitorQueue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,6 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.atixlabs.monitor.Monitor.PORT;
 
@@ -20,17 +22,14 @@ public class MonitorSocketServer {
 
     private static final Logger LOG = LogManager.getLogger(MonitorSocketServer.class);
 
-    private final ExecutorService executor;
-
-    public MonitorSocketServer(ExecutorService executor) {
-        this.executor = executor;
-    }
+    private static final int THREADS = 8;
 
     public void start() throws IOException {
         ServerSocket server = new ServerSocket(PORT);
+        ExecutorService executor = Executors.newFixedThreadPool(THREADS);
         BlockingQueue<Message> queue = MonitorQueue.getInstance().getQueue();
 
-        LOG.info("Socket ready to accept connection");
+        LOG.info("Socket ready to accept connections on port " + PORT);
 
         while (true){
             Socket socket = server.accept();

@@ -1,4 +1,4 @@
-package com.atixlabs.monitor;
+package com.atixlabs.monitor.queue;
 
 import com.atixlabs.message.Message;
 
