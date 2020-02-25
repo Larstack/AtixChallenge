@@ -11,7 +11,7 @@ fi
 echo "Compiling project.."
 mvn -DskipTests clean install -U > /dev/null
 
-echo "Starting monitor"
+echo "Starting monitor.."
 java -jar target/atix-challenge-0.0.1-SNAPSHOT.jar $1 $2
 
 
