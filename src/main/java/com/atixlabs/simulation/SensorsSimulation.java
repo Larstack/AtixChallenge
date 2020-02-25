@@ -9,9 +9,9 @@ import java.util.stream.IntStream;
 /**
  * @author larstack
  */
-public class ClientsSimulation {
+public class SensorsSimulation {
 
-    private static final Logger LOG = LogManager.getLogger(ClientsSimulation.class);
+    private static final Logger LOG = LogManager.getLogger(SensorsSimulation.class);
 
     private static final int SENSORS = 4;
 
