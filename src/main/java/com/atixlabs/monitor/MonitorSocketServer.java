@@ -1,40 +1,36 @@
-package com.atixlabs.server;
+package com.atixlabs.monitor;
 
 import com.atixlabs.message.Message;
-import com.atixlabs.server.processor.MeasurementsProcessor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.math.BigDecimal;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+
+import static com.atixlabs.monitor.Monitor.PORT;
 
 /**
  * @author larstack
  */
-public class MonitorServer {
+public class MonitorSocketServer {
 
-    private static final Logger LOG = LogManager.getLogger(MonitorServer.class);
+    private static final Logger LOG = LogManager.getLogger(MonitorSocketServer.class);
 
-    public static final int PORT = 2222;
-    private static final int THREADS = 8;
-    private static final int QUEUE_CAPACITY = 60;
-    private static final long PERIODIC_DELAY = 30;
+    private final ExecutorService executor;
 
-    public static void main(String[] args) throws IOException {
+    public MonitorSocketServer(ExecutorService executor) {
+        this.executor = executor;
+    }
 
+    public void start() throws IOException {
         ServerSocket server = new ServerSocket(PORT);
-        ExecutorService executor = Executors.newFixedThreadPool(THREADS);
-        BlockingQueue<Message> queue = new ArrayBlockingQueue(QUEUE_CAPACITY, true);
+        BlockingQueue<Message> queue = MonitorQueue.getInstance().getQueue();
 
-        Executors.newSingleThreadScheduledExecutor()
-                .scheduleAtFixedRate(new MeasurementsProcessor(queue, new BigDecimal(args[0]), new BigDecimal(args[1])),
-                        PERIODIC_DELAY, PERIODIC_DELAY, TimeUnit.SECONDS);
-
-        LOG.info("Server is listening");
+        LOG.info("Socket ready to accept connection");
 
         while (true){
             Socket socket = server.accept();

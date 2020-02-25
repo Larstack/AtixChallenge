@@ -1,7 +1,7 @@
 package com.atixlabs;
 
 import com.atixlabs.message.Message;
-import com.atixlabs.server.processor.MeasurementsProcessor;
+import com.atixlabs.monitor.processor.MeasurementsProcessor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;

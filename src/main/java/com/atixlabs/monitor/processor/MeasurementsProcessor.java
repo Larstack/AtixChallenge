@@ -1,4 +1,4 @@
-package com.atixlabs.server.processor;
+package com.atixlabs.monitor.processor;
 
 import com.atixlabs.message.Message;
 import org.apache.logging.log4j.LogManager;
