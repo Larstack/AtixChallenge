@@ -19,8 +19,8 @@ public class MonitorServer {
 
     private static final Logger LOG = LogManager.getLogger(MonitorServer.class);
 
-    private static final int PORT = 5000;
-    private static final int THREADS = 2;
+    public static final int PORT = 2222;
+    private static final int THREADS = 8;
     private static final int QUEUE_CAPACITY = 60;
     private static final long PERIODIC_DELAY = 30;
 
@@ -32,19 +32,19 @@ public class MonitorServer {
 
         Executors.newSingleThreadScheduledExecutor()
                 .scheduleAtFixedRate(new MeasurementsProcessor(queue, new BigDecimal(args[0]), new BigDecimal(args[1])),
-                        0, PERIODIC_DELAY, TimeUnit.SECONDS);
+                        PERIODIC_DELAY, PERIODIC_DELAY, TimeUnit.SECONDS);
+
+        LOG.info("Server is listening");
 
         while (true){
-            LOG.info("Waiting for request");
             Socket socket = server.accept();
             executor.execute(() -> {
                 try {
-                    LOG.info("New client connected");
                     ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                     Message input = (Message) inputStream.readObject();
-                    LOG.debug("Message: [" + input + "]");
                     queue.put(input);
-                    LOG.debug("Message inserted to the queue");
+                    LOG.debug("Message [" + input + "] inserted to the queue");
+                    inputStream.close();
                 } catch (Exception e) {
                     LOG.error("Error ocurred inserting message to the queue");
                     e.printStackTrace();

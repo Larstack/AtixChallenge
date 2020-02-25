@@ -39,11 +39,11 @@ public class MonitorServerTests {
     @Test
     public void processorFlowTest() throws Exception {
         ArrayBlockingQueue queue = new ArrayBlockingQueue(5, true);
-        queue.put(createMessage(BigDecimal.valueOf(3)));
-        queue.put(createMessage(BigDecimal.valueOf(1)));
-        queue.put(createMessage(BigDecimal.valueOf(30.4)));
-        queue.put(createMessage(BigDecimal.valueOf(-5)));
-        queue.put(createMessage(BigDecimal.valueOf(1.43)));
+        queue.put(createMessage(BigDecimal.valueOf(3), "message_1"));
+        queue.put(createMessage(BigDecimal.valueOf(1), "message_2"));
+        queue.put(createMessage(BigDecimal.valueOf(30.4), "message_3"));
+        queue.put(createMessage(BigDecimal.valueOf(-5), "message_4"));
+        queue.put(createMessage(BigDecimal.valueOf(1.43), "message_5"));
 
         BigDecimal s = BigDecimal.valueOf(-50);
         BigDecimal m = BigDecimal.valueOf(4);
@@ -82,8 +82,6 @@ public class MonitorServerTests {
         assertFalse(Whitebox.invokeMethod(processor, DIFFERENCE_METHOD, BigDecimal.valueOf(30.4), BigDecimal.valueOf(-5)));
     }
 
-    ////////////
-
     @Test
     public void averageIsGreaterThanM() throws Exception {
         BigDecimal s = BigDecimal.valueOf(-50);
@@ -104,7 +102,7 @@ public class MonitorServerTests {
         assertFalse(Whitebox.invokeMethod(processor, AVERAGE_METHOD, BigDecimal.valueOf(3.9)));
     }
 
-    private Message createMessage(BigDecimal value) {
-        return new Message(value);
+    private Message createMessage(BigDecimal value, String id) {
+        return new Message(value, id);
     }
 }
