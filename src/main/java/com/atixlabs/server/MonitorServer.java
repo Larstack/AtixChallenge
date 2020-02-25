@@ -42,9 +42,8 @@ public class MonitorServer {
                 try {
                     ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
                     Message input = (Message) inputStream.readObject();
-                    LOG.debug("New message received: [" + input + "]");
                     queue.put(input);
-                    LOG.debug("Message inserted to the queue");
+                    LOG.debug("Message [" + input + "] inserted to the queue");
                     inputStream.close();
                 } catch (Exception e) {
                     LOG.error("Error ocurred inserting message to the queue");
